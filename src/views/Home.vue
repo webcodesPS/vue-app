@@ -14,5 +14,7 @@ import ToDos from "@/components/ToDos.vue"; // @ is an alias to /src
       ToDos
   }
 })
-export default class Home extends Vue {}
+export default class Home extends Vue {
+
+}
 </script>
