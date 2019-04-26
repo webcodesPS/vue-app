@@ -17,9 +17,10 @@
 <script lang="ts">
   import { Component, Vue } from "vue-property-decorator";
   import { mapState } from 'vuex';
-  import store from "../store";
+  // import store from "../store";
 
 @Component({
+  name: 'ToDos',
   computed: {
     ...mapState({
       header: 'headerState',
@@ -30,26 +31,26 @@
 export default class ToDos extends Vue {
   constructor() {
     super();
-    if (localStorage.getItem('todos')) {
-      store.state.todosState = JSON.parse(<string>localStorage.getItem('todos'));
-    }
+    // if (localStorage.getItem('todos')) {
+    //   this.$store.state.todosState = JSON.parse(<string>localStorage.getItem('todos'));
+    // }
   }
 
   public newTodoText: string = "";
   public nextTodoId: number = 4;
 
   public addNewTodo() {
-    store.state.todosState.push({
+    this.$store.state.todosState.push({
       id: this.nextTodoId++,
       text: this.newTodoText
     });
-    localStorage.setItem('todos', JSON.stringify(store.state.todosState));
+    // localStorage.setItem('todos', JSON.stringify(this.$store.state.todosState));
   }
 
   public deleteTodo(todo: any) {
-    const todoIndex = store.state.todosState.indexOf(todo);
-    store.state.todosState.splice(todoIndex, 1);
-    localStorage.setItem('todos', JSON.stringify(store.state.todosState));
+    const todoIndex = this.$store.state.todosState.indexOf(todo);
+    this.$store.state.todosState.splice(todoIndex, 1);
+    // localStorage.setItem('todos', JSON.stringify(this.$store.state.todosState));
   }
 }
 </script>

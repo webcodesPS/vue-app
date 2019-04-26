@@ -11,5 +11,8 @@ export default new Vuex.Store({
             { id: 2, text: "Lorem ipsum dolor sit amet"},
             { id: 3, text: "Lorem ipsum dolor sit amet"}
         ]
-    }
+    },
+    getters: {},
+    mutations: {},
+    actions: {}
 });
