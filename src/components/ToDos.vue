@@ -1,13 +1,16 @@
 <template>
   <div class="todo">
-    <h1>{{ header }}</h1>
+    <h1>{{ header }}: {{ count }}</h1>
     <form v-on:submit.prevent="">
-      <input type="text" v-model="newTodoText">
-      <button v-on:click="addNewTodo">add</button>
-      <div class="row-item" v-for="(todo, index) in todos">
+      <div class="row-add">
+        <input type="text" v-model="newTodoText">
+        <button v-on:click="addNewTodo">add</button>
+      </div>
+      <div class="row-item" v-for="todo in todos">
         <div>
-          <p>{{ todo.text }}</p>
+          <input type="text" v-model="todo.text" :disabled="true"/>
         </div>
+        <button v-on:click="editTodo">edit</button>
         <button v-on:click="deleteTodo(todo)">remove</button>
       </div>
     </form>
@@ -16,8 +19,7 @@
 
 <script lang="ts">
   import { Component, Vue } from "vue-property-decorator";
-  import { mapState } from 'vuex';
-  // import store from "../store";
+  import { mapState, mapGetters } from 'vuex';
 
 @Component({
   name: 'ToDos',
@@ -25,35 +27,36 @@
     ...mapState({
       header: 'headerState',
       todos: 'todosState'
-    })
+    }),
+    ...mapGetters({
+        count: 'todosCount'
+     })
   }
 })
 export default class ToDos extends Vue {
   constructor() {
     super();
-    // if (localStorage.getItem('todos')) {
-    //   this.$store.state.todosState = JSON.parse(<string>localStorage.getItem('todos'));
-    // }
+    if (localStorage.getItem('todos')) {
+      this.$store.state.todosState = JSON.parse(<string>localStorage.getItem('todos'));
+    }
   }
 
   public newTodoText: string = "";
-  public nextTodoId: number = 4;
 
-  public addNewTodo() {
-    this.$store.state.todosState.push({
-      id: this.nextTodoId++,
-      text: this.newTodoText
-    });
-    // localStorage.setItem('todos', JSON.stringify(this.$store.state.todosState));
+  public addNewTodo(): void {
+    this.$store.commit('addNewTodo', this.newTodoText);
   }
 
   public deleteTodo(todo: any) {
-    const todoIndex = this.$store.state.todosState.indexOf(todo);
-    this.$store.state.todosState.splice(todoIndex, 1);
-    // localStorage.setItem('todos', JSON.stringify(this.$store.state.todosState));
+    this.$store.commit('deleteTodo', todo);
+  }
+
+  public editTodo(event: any) {
+    this.$store.commit('editTodo', event);
   }
 }
 </script>
+
 <style scoped lang="scss">
   .todo {
     margin: 0 auto;
@@ -61,21 +64,31 @@ export default class ToDos extends Vue {
     text-align: left;
     input[type=text] {
       width: 295px;
-      height: 24px;
+      height: 26px;
       padding-left: 5px;
+      border-top: 1px solid darkgrey;
+      border-right: 0;
+      border-bottom: 1px solid darkgrey;
+      border-left: 1px solid darkgrey;
     }
     button {
       border: 0;
       width: 80px;
       height: 30px;
+      border-top: 1px solid darkgrey;
+      border-right: 0;
+      border-bottom: 1px solid darkgrey;
+      border-left: 1px solid darkgrey;
+    }
+    .row-add {
+      margin-bottom: 5px;
     }
     .row-item {
       text-align: left;
-      border: solid 1px #e6e6e6;
       width: 382px;
       div {
         display: inline-flex;
-        width: 302px;
+        width: 222px;
         padding: 5px 0;
         p {
           margin: 0 0 0 5px;
