@@ -6,11 +6,11 @@
         <input type="text" v-model="newTodoText">
         <button v-on:click="addNewTodo">add</button>
       </div>
-      <div class="row-item" v-for="todo in todos">
+      <div class="row-item" v-for="(todo, index) in todos">
         <div>
-          <input type="text" v-model="todo.text" :disabled="true"/>
+          <input type="text" v-bind:value="todo.text" :disabled="true"/>
         </div>
-        <button v-on:click="editTodo">edit</button>
+        <button v-on:click="editTodo" v-bind:value="index">edit</button>
         <button v-on:click="deleteTodo(todo)">remove</button>
       </div>
     </form>
@@ -79,9 +79,17 @@ export default class ToDos extends Vue {
       border-right: 0;
       border-bottom: 1px solid darkgrey;
       border-left: 1px solid darkgrey;
+      cursor: pointer;
     }
     .row-add {
       margin-bottom: 5px;
+      button:hover {
+        background-color: #90f19c;
+      }
+      input:focus {
+        box-shadow: 0 0 5px #fff;
+        -webkit-box-shadow: 0 0 5px #fff
+      }
     }
     .row-item {
       text-align: left;
@@ -94,6 +102,17 @@ export default class ToDos extends Vue {
           margin: 0 0 0 5px;
         }
       }
+      input:focus {
+        box-shadow: 0 0 5px #fff;
+        -webkit-box-shadow: 0 0 5px #fff
+      }
+      & button:nth-child(2):hover {
+        background-color: #f8ffbf;
+      }
+      & button:nth-child(3):hover {
+        background-color: #ffc1ad;
+      }
+
     }
   }
 </style>

@@ -18,3 +18,11 @@ export default class Home extends Vue {
 
 }
 </script>
+
+<style lang="scss">
+  .home {
+    img {
+      height: 100px;
+    }
+  }
+</style>
