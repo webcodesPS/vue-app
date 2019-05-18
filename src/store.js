@@ -3,7 +3,6 @@ import Vuex from 'vuex';
 Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
-        headerState: "To Dos",
         todosState: [
             { id: 0, text: "Lorem ipsum dolor..." },
             { id: 1, text: "Lorem ipsum dolor..." },

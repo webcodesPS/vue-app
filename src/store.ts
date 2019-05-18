@@ -1,11 +1,14 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import Todo from './interfaces/Todo';
 
 Vue.use(Vuex);
+interface State {
+    todosState: Todo[];
+}
 
-export default new Vuex.Store({
+export default new Vuex.Store<State>({
     state: {
-        headerState: "To Dos",
         todosState: [
             { id: 0, text: "Lorem ipsum dolor..."},
             { id: 1, text: "Lorem ipsum dolor..."},

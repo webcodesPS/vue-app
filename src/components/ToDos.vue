@@ -1,6 +1,6 @@
 <template>
   <div class="todo">
-    <h1>{{ header }}: {{ count }}</h1>
+    <h1>Todos: {{ count }}</h1>
     <form v-on:submit.prevent="">
       <div class="row-add">
         <input type="text" v-model="newTodoText">
@@ -18,14 +18,14 @@
 </template>
 
 <script lang="ts">
-  import { Component, Vue } from "vue-property-decorator";
+  import { Component, Vue, Prop } from "vue-property-decorator";
   import { mapState, mapGetters } from 'vuex';
+  // import Todo from '../interfaces/Todo';
 
 @Component({
   name: 'ToDos',
   computed: {
     ...mapState({
-      header: 'headerState',
       todos: 'todosState'
     }),
     ...mapGetters({
@@ -41,6 +41,7 @@ export default class ToDos extends Vue {
     }
   }
 
+  // @Prop() todosState!: Todo;
   public newTodoText: string = "";
 
   public addNewTodo(): void {
@@ -52,6 +53,9 @@ export default class ToDos extends Vue {
   }
 
   public editTodo(event: any) {
+
+      // console.log(this.todosState)
+
     this.$store.commit('editTodo', event);
   }
 }
